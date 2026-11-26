@@ -1,0 +1,178 @@
+{
+ "app": "whatsapp_connector",
+ "charts": [],
+ "content": "[{\"id\": \"wac0000001\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>WhatsApp</b></span>\", \"col\": 12}}, {\"id\": \"wac0000002\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"WhatsApp Users Connected\", \"col\": 3}}, {\"id\": \"wac0000003\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"WhatsApp Messages Today\", \"col\": 3}}, {\"id\": \"wac0000004\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"WhatsApp Messages Waiting\", \"col\": 3}}, {\"id\": \"wac0000005\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"WhatsApp Failed Messages\", \"col\": 3}}, {\"id\": \"wac0000006\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"wac0000007\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"wac0000008\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"WhatsApp Chat\", \"col\": 3}}, {\"id\": \"wac0000009\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Connected Users\", \"col\": 3}}, {\"id\": \"wac0000010\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Messages\", \"col\": 3}}, {\"id\": \"wac0000011\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contacts\", \"col\": 3}}, {\"id\": \"wac0000012\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"wac0000013\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\", \"col\": 12}}, {\"id\": \"wac0000014\", \"type\": \"card\", \"data\": {\"card_name\": \"Messaging\", \"col\": 4}}, {\"id\": \"wac0000015\", \"type\": \"card\", \"data\": {\"card_name\": \"Users & Computers\", \"col\": 4}}, {\"id\": \"wac0000016\", \"type\": \"card\", \"data\": {\"card_name\": \"Settings\", \"col\": 4}}]",
+ "creation": "2026-11-23 19:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "message-circle",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "WhatsApp",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Messaging",
+   "link_count": 2,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Message",
+   "link_count": 0,
+   "link_to": "WhatsApp Message",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Contact",
+   "link_count": 0,
+   "link_to": "WhatsApp Contact",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Users & Computers",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Connection User",
+   "link_count": 0,
+   "link_to": "WhatsApp Connection User",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Account",
+   "link_count": 0,
+   "link_to": "WhatsApp Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Device",
+   "link_count": 0,
+   "link_to": "WhatsApp Device",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "WhatsApp Connector Settings",
+   "link_count": 0,
+   "link_to": "WhatsApp Connector Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-11-23 19:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp",
+ "number_cards": [
+  {
+   "label": "WhatsApp Users Connected",
+   "number_card_name": "WhatsApp Users Connected"
+  },
+  {
+   "label": "WhatsApp Messages Today",
+   "number_card_name": "WhatsApp Messages Today"
+  },
+  {
+   "label": "WhatsApp Messages Waiting",
+   "number_card_name": "WhatsApp Messages Waiting"
+  },
+  {
+   "label": "WhatsApp Failed Messages",
+   "number_card_name": "WhatsApp Failed Messages"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [
+  {
+   "role": "WhatsApp User"
+  },
+  {
+   "role": "WhatsApp Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 50.0,
+ "shortcuts": [
+  {
+   "label": "WhatsApp Chat",
+   "link_to": "whatsapp-chat",
+   "type": "Page",
+   "color": "Green"
+  },
+  {
+   "label": "Connected Users",
+   "link_to": "WhatsApp Connection User",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Blue"
+  },
+  {
+   "label": "Messages",
+   "link_to": "WhatsApp Message",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Grey"
+  },
+  {
+   "label": "Contacts",
+   "link_to": "WhatsApp Contact",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Grey"
+  }
+ ],
+ "title": "WhatsApp",
+ "type": "Workspace"
+}

@@ -1,0 +1,22 @@
+{
+ "color": "green",
+ "creation": "2026-11-23 19:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "WhatsApp Connection User",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"WhatsApp Connection User\", \"whatsapp_status\", \"=\", \"Connected\", false]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "WhatsApp Users Connected",
+ "modified": "2026-11-23 19:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Users Connected",
+ "owner": "Administrator",
+ "show_percentage_stats": 0,
+ "stats_time_interval": "Daily",
+ "type": "Document Type"
+}

@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "autoname": "field:user",
+ "creation": "2026-11-23 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "full_name",
+  "status",
+  "column_break_a",
+  "whatsapp_number",
+  "whatsapp_status",
+  "computer_section",
+  "device",
+  "device_name",
+  "column_break_b",
+  "last_login",
+  "last_logout",
+  "token_section",
+  "access_token",
+  "token_issued_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1,
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name",
+   "fetch_from": "user.full_name",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "ERPNext Status",
+   "options": "Connected\nDisconnected",
+   "default": "Disconnected",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "Disconnected when the user logged out, their token was removed, or the computer stopped responding."
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "whatsapp_number",
+   "fieldtype": "Data",
+   "label": "WhatsApp Mobile Number",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "whatsapp_status",
+   "fieldtype": "Select",
+   "label": "WhatsApp Status",
+   "read_only": 1,
+   "options": "Connected\nConnecting\nDisconnected",
+   "default": "Disconnected",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "computer_section",
+   "fieldtype": "Section Break",
+   "label": "Computer"
+  },
+  {
+   "fieldname": "device",
+   "fieldtype": "Link",
+   "label": "WhatsApp Device",
+   "options": "WhatsApp Device",
+   "read_only": 1
+  },
+  {
+   "fieldname": "device_name",
+   "fieldtype": "Data",
+   "label": "Computer Name",
+   "fetch_from": "device.device_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_login",
+   "fieldtype": "Datetime",
+   "label": "Last Login",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_logout",
+   "fieldtype": "Datetime",
+   "label": "Last Logout",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_section",
+   "fieldtype": "Section Break",
+   "label": "Access Token"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Data",
+   "label": "Access Token",
+   "length": 200,
+   "read_only": 1,
+   "description": "Set automatically when the user logs in from the WhatsApp ERP Connector app. Use Remove Access Token to log that computer out: WhatsApp is unlinked there and its chats are removed from ERPNext."
+  },
+  {
+   "fieldname": "token_issued_on",
+   "fieldtype": "Datetime",
+   "label": "Token Issued On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-11-23 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Connection User",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 0
+  },
+  {
+   "role": "WhatsApp Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 0
+  },
+  {
+   "role": "WhatsApp User",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 0,
+   "email": 0,
+   "share": 0
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "full_name,whatsapp_number",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

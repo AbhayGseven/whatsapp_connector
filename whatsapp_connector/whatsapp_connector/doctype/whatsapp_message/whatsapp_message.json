@@ -1,0 +1,431 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-11-21 13:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "direction",
+  "status",
+  "send_to_contact",
+  "phone",
+  "from_number",
+  "to_number",
+  "column_break_a",
+  "account",
+  "device",
+  "message_type",
+  "command",
+  "content_section",
+  "content",
+  "media_file",
+  "column_break_m",
+  "media_filename",
+  "media_mimetype",
+  "media_size",
+  "sender_section",
+  "sender_name",
+  "sender_jid",
+  "column_break_s",
+  "chat_jid",
+  "conversation_key",
+  "is_group",
+  "is_read",
+  "whatsapp_section",
+  "whatsapp_message_id",
+  "message_timestamp",
+  "quoted_message_id",
+  "column_break_w",
+  "dedupe_key",
+  "idempotency_key",
+  "context_json",
+  "delivery_section",
+  "attempts",
+  "lease_expires_at",
+  "error",
+  "column_break_d",
+  "sent_at",
+  "delivered_at",
+  "read_at",
+  "reference_section",
+  "reference_doctype",
+  "column_break_r",
+  "reference_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "Incoming\nOutgoing",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "default": "Outgoing"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Received\nQueued\nSending\nSent\nDelivered\nRead\nFailed\nCancelled",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "read_only": 1,
+   "default": "Queued"
+  },
+  {
+   "fieldname": "send_to_contact",
+   "fieldtype": "Link",
+   "options": "WhatsApp Contact",
+   "label": "WhatsApp Contact",
+   "depends_on": "eval:doc.__islocal",
+   "description": "Optional: pick a saved contact or group of the WhatsApp number above.",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Contact Number",
+   "in_list_view": 0,
+   "in_standard_filter": 1,
+   "description": "To: mobile number with country code, e.g. +91 98765 43210 (or choose a WhatsApp Contact).",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "from_number",
+   "fieldtype": "Data",
+   "label": "From (Sender Number)",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "WhatsApp number that sent the message (digits with country code). Empty when WhatsApp has not revealed it (privacy ID)."
+  },
+  {
+   "fieldname": "to_number",
+   "fieldtype": "Data",
+   "label": "To (Receiver Number)",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "WhatsApp number that received it, or the group ID for group messages."
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "WhatsApp Account",
+   "options": "WhatsApp Account",
+   "in_standard_filter": 1,
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "description": "Send from: your linked WhatsApp number."
+  },
+  {
+   "fieldname": "device",
+   "fieldtype": "Link",
+   "label": "Device",
+   "options": "WhatsApp Device",
+   "read_only": 1
+  },
+  {
+   "fieldname": "message_type",
+   "fieldtype": "Select",
+   "label": "Message Type",
+   "options": "text\nimage\ndocument\nvideo\naudio\nsticker\nlocation\ncontact\nreaction\nother",
+   "default": "text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "command",
+   "fieldtype": "Select",
+   "label": "Command",
+   "options": "\nSEND_TEXT\nSEND_IMAGE\nSEND_VIDEO\nSEND_AUDIO\nSEND_DOCUMENT\nSEND_PDF\nSEND_REACTION",
+   "depends_on": "eval:doc.direction=='Outgoing'",
+   "read_only": 1
+  },
+  {
+   "fieldname": "content_section",
+   "fieldtype": "Section Break",
+   "label": "Content"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Long Text",
+   "label": "Message / Caption",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "media_file",
+   "fieldtype": "Attach",
+   "label": "Media",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "description": "Optional: image, PDF, document, video or audio."
+  },
+  {
+   "fieldname": "column_break_m",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "media_filename",
+   "fieldtype": "Data",
+   "label": "Media Filename",
+   "read_only": 1
+  },
+  {
+   "fieldname": "media_mimetype",
+   "fieldtype": "Data",
+   "label": "Media MIME Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "media_size",
+   "fieldtype": "Int",
+   "label": "Media Size (bytes)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sender_section",
+   "fieldtype": "Section Break",
+   "label": "Sender / Chat",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "sender_name",
+   "fieldtype": "Data",
+   "label": "Sender Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sender_jid",
+   "fieldtype": "Data",
+   "label": "Sender JID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_s",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "chat_jid",
+   "fieldtype": "Data",
+   "label": "Chat JID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "conversation_key",
+   "fieldtype": "Data",
+   "label": "Conversation",
+   "read_only": 1,
+   "description": "Groups one person's messages even when WhatsApp addresses them by phone number in one message and by privacy ID (@lid) in another."
+  },
+  {
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Group Chat",
+   "read_only": 1
+  },
+  {
+   "fieldname": "is_read",
+   "fieldtype": "Check",
+   "label": "Read in ERPNext",
+   "default": "0",
+   "read_only": 1,
+   "description": "Incoming messages: set when someone opens the conversation in WhatsApp Chat."
+  },
+  {
+   "fieldname": "whatsapp_section",
+   "fieldtype": "Section Break",
+   "label": "WhatsApp",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "whatsapp_message_id",
+   "fieldtype": "Data",
+   "label": "WhatsApp Message ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "message_timestamp",
+   "fieldtype": "Datetime",
+   "label": "WhatsApp Timestamp",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quoted_message_id",
+   "fieldtype": "Data",
+   "label": "Reply To (Message ID)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dedupe_key",
+   "fieldtype": "Data",
+   "label": "Dedupe Key",
+   "read_only": 1,
+   "unique": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "idempotency_key",
+   "fieldtype": "Data",
+   "label": "Idempotency Key",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "context_json",
+   "fieldtype": "Code",
+   "label": "Context",
+   "options": "JSON",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delivery_section",
+   "fieldtype": "Section Break",
+   "label": "Delivery",
+   "depends_on": "eval:doc.direction=='Outgoing'"
+  },
+  {
+   "fieldname": "attempts",
+   "fieldtype": "Int",
+   "label": "Attempts",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "lease_expires_at",
+   "fieldtype": "Datetime",
+   "label": "Lease Expires",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error",
+   "fieldtype": "Small Text",
+   "label": "Error",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_d",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sent_at",
+   "fieldtype": "Datetime",
+   "label": "Accepted by WhatsApp",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delivered_at",
+   "fieldtype": "Datetime",
+   "label": "Delivered",
+   "read_only": 1
+  },
+  {
+   "fieldname": "read_at",
+   "fieldtype": "Datetime",
+   "label": "Read",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_section",
+   "fieldtype": "Section Break",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Reference DocType",
+   "options": "DocType",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "column_break_r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Name",
+   "options": "reference_doctype",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-11-21 13:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Message",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp User",
+   "read": 1,
+   "write": 0,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 0,
+   "email": 0,
+   "share": 0,
+   "if_owner": 0
+  },
+  {
+   "role": "WhatsApp User",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 0,
+   "email": 0,
+   "share": 0,
+   "if_owner": 1,
+   "permlevel": 0
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "phone,direction,status",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "phone",
+ "track_seen": 0
+}

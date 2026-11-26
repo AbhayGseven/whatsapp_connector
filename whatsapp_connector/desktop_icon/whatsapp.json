@@ -1,0 +1,32 @@
+{
+ "app": "whatsapp_connector",
+ "bg_color": "gray",
+ "creation": "2026-11-23 19:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon": "message-circle",
+ "icon_type": "Link",
+ "idx": 0,
+ "label": "WhatsApp",
+ "link_to": "WhatsApp",
+ "link_type": "Workspace Sidebar",
+ "logo_url": "/assets/whatsapp_connector/images/whatsapp-connector.svg",
+ "modified": "2026-11-23 19:00:00.000000",
+ "modified_by": "Administrator",
+ "name": "WhatsApp",
+ "owner": "Administrator",
+ "restrict_removal": 0,
+ "roles": [
+  {
+   "role": "WhatsApp User"
+  },
+  {
+   "role": "WhatsApp Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "standard": 1
+}

@@ -1,0 +1,200 @@
+{
+ "actions": [],
+ "creation": "2026-11-21 13:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "auto_approve_devices",
+  "default_country_code",
+  "timing_section",
+  "heartbeat_interval",
+  "offline_after",
+  "poll_interval",
+  "column_break_t",
+  "job_lease_seconds",
+  "max_send_attempts",
+  "max_media_size_mb",
+  "history_section",
+  "history_sync_days",
+  "media_download",
+  "history_include_media",
+  "realtime_url",
+  "column_break_e",
+  "service_user",
+  "send_section",
+  "send_doctypes"
+ ],
+ "fields": [
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled",
+   "default": "1",
+   "description": "When disabled, devices are refused and no jobs are handed out."
+  },
+  {
+   "fieldname": "auto_approve_devices",
+   "fieldtype": "Check",
+   "label": "Auto-approve New Devices",
+   "default": "0",
+   "description": "Off (recommended): a manager must approve each new computer before it can send or receive."
+  },
+  {
+   "fieldname": "default_country_code",
+   "fieldtype": "Data",
+   "label": "Default Country Code",
+   "default": "91",
+   "description": "Digits only. Prepended to 10-digit numbers that have no country code."
+  },
+  {
+   "fieldname": "timing_section",
+   "fieldtype": "Section Break",
+   "label": "Timing"
+  },
+  {
+   "fieldname": "heartbeat_interval",
+   "fieldtype": "Int",
+   "label": "Heartbeat Interval (seconds)",
+   "default": "30",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "offline_after",
+   "fieldtype": "Int",
+   "label": "Mark Device Offline After (seconds)",
+   "default": "120",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "poll_interval",
+   "fieldtype": "Int",
+   "label": "Job Poll Interval (seconds)",
+   "default": "15",
+   "non_negative": 1,
+   "description": "Fallback polling. Devices are also woken instantly over Frappe realtime."
+  },
+  {
+   "fieldname": "column_break_t",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "job_lease_seconds",
+   "fieldtype": "Int",
+   "label": "Job Lease (seconds)",
+   "default": "120",
+   "non_negative": 1,
+   "description": "A claimed job returns to the queue if the device does not report a result in time."
+  },
+  {
+   "fieldname": "max_send_attempts",
+   "fieldtype": "Int",
+   "label": "Max Send Attempts",
+   "default": "5",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "max_media_size_mb",
+   "fieldtype": "Int",
+   "label": "Max Media Size (MB)",
+   "default": "16",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "history_section",
+   "fieldtype": "Section Break",
+   "label": "History & Contacts"
+  },
+  {
+   "fieldname": "history_sync_days",
+   "fieldtype": "Int",
+   "label": "Import Chat History (days)",
+   "default": "90",
+   "non_negative": 1,
+   "description": "When a WhatsApp account is linked, import messages from the last N days. 0 = contacts only. More than 90 requests the full history from the phone (slower)."
+  },
+  {
+   "fieldname": "media_download",
+   "fieldtype": "Select",
+   "label": "Media Download",
+   "options": "On Request\nAutomatic",
+   "default": "On Request",
+   "description": "On Request: photos, videos, voice notes and documents are not copied to ERPNext until someone clicks Download in WhatsApp Chat; the computer where the user is logged in then fetches it from WhatsApp. Automatic: every file is copied when the message arrives (uses much more disk space)."
+  },
+  {
+   "fieldname": "history_include_media",
+   "fieldtype": "Check",
+   "label": "Download Media in History",
+   "default": "0",
+   "description": "Only with Media Download = Automatic: also copy the files of imported chat history."
+  },
+  {
+   "fieldname": "realtime_url",
+   "fieldtype": "Data",
+   "label": "Realtime URL (optional)",
+   "description": "Leave empty when ERPNext is behind nginx (the normal production setup). For a development bench, enter the socket.io address, e.g. http://192.168.1.10:9000"
+  },
+  {
+   "fieldname": "column_break_e",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_user",
+   "fieldtype": "Link",
+   "label": "Service User",
+   "options": "User",
+   "read_only": 1,
+   "description": "Internal user that enrolled devices act as. Created automatically."
+  },
+  {
+   "fieldname": "send_section",
+   "fieldtype": "Section Break",
+   "label": "Send WhatsApp automatically",
+   "description": "When a document of these types is created, submitted or cancelled (Send When), a WhatsApp message goes to its mobile number - from the WhatsApp number of the user who did it, or else the default sending account. A comment on the document shows the result."
+  },
+  {
+   "fieldname": "send_doctypes",
+   "fieldtype": "Table",
+   "options": "WhatsApp Send DocType",
+   "label": "DocTypes"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-21 13:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Connector Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

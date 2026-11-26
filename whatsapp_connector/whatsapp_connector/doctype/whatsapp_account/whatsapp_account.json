@@ -1,0 +1,158 @@
+{
+ "actions": [],
+ "autoname": "field:account_id",
+ "creation": "2026-11-21 13:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "phone_number",
+  "is_default",
+  "column_break_a",
+  "device",
+  "user",
+  "status",
+  "last_status_at",
+  "ids_section",
+  "account_id",
+  "jid"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Label",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Default Sending Account",
+   "default": "0",
+   "description": "Used by send_message() when no account is given."
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "device",
+   "fieldtype": "Link",
+   "label": "Device",
+   "options": "WhatsApp Device",
+   "reqd": 1,
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "options": "User",
+   "label": "Owner",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "The ERPNext user who linked this WhatsApp. Its chats stay with this user (and managers) after logout or unlinking."
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "unknown\nconnected\nconnecting\nqr\nreconnecting\ndisconnected\nlogged_out\nerror",
+   "default": "unknown",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "last_status_at",
+   "fieldtype": "Datetime",
+   "label": "Status Updated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ids_section",
+   "fieldtype": "Section Break",
+   "label": "Identifiers",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "account_id",
+   "fieldtype": "Data",
+   "label": "Account ID",
+   "reqd": 1,
+   "unique": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "jid",
+   "fieldtype": "Data",
+   "label": "JID",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-11-21 13:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Account",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp User",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 0,
+   "email": 0,
+   "share": 0
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "label,phone_number",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "label"
+}

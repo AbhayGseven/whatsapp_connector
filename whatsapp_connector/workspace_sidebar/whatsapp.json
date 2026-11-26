@@ -1,0 +1,122 @@
+{
+ "app": "whatsapp_connector",
+ "creation": "2026-11-23 19:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "message-circle",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Home",
+   "link_to": "WhatsApp",
+   "link_type": "Workspace",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "home"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "WhatsApp Chat",
+   "link_to": "whatsapp-chat",
+   "link_type": "Page",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "message-circle"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Messages",
+   "link_to": "WhatsApp Message",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "messages-square"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Contacts",
+   "link_to": "WhatsApp Contact",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "contact"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Connected Users",
+   "link_to": "WhatsApp Connection User",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "user-check"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "settings",
+   "indent": 1,
+   "keep_closed": 0,
+   "label": "Setup",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Section Break"
+  },
+  {
+   "child": 1,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "WhatsApp Account",
+   "link_to": "WhatsApp Account",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 1,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "WhatsApp Device",
+   "link_to": "WhatsApp Device",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 1,
+   "collapsible": 1,
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Settings",
+   "link_to": "WhatsApp Connector Settings",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link",
+   "icon": "settings"
+  }
+ ],
+ "modified": "2026-11-23 19:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp",
+ "owner": "Administrator",
+ "standard": 1,
+ "title": "WhatsApp"
+}

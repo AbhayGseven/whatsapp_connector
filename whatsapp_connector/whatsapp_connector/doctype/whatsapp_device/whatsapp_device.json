@@ -1,0 +1,221 @@
+{
+ "actions": [],
+ "autoname": "field:device_uuid",
+ "creation": "2026-11-21 13:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "device_name",
+  "assigned_user",
+  "device_uuid",
+  "user",
+  "column_break_a",
+  "status",
+  "connection_status",
+  "whatsapp_status",
+  "details_section",
+  "hostname",
+  "platform",
+  "app_version",
+  "column_break_b",
+  "registered_on",
+  "last_heartbeat",
+  "last_ip",
+  "last_error",
+  "auth_section",
+  "auth_method",
+  "column_break_c",
+  "token_issued_on",
+  "token_hash"
+ ],
+ "fields": [
+  {
+   "fieldname": "device_name",
+   "fieldtype": "Data",
+   "label": "Device Name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "assigned_user",
+   "fieldtype": "Link",
+   "options": "User",
+   "label": "Assigned User",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "The ERPNext user who owns the WhatsApp numbers linked on this computer. Only this user (and WhatsApp/System Managers) can see their chats and contacts."
+  },
+  {
+   "fieldname": "device_uuid",
+   "fieldtype": "Data",
+   "label": "Device UUID",
+   "reqd": 1,
+   "unique": 1,
+   "read_only": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Integration User",
+   "options": "User",
+   "reqd": 1,
+   "read_only": 1,
+   "in_standard_filter": 1,
+   "description": "The ERPNext user whose API key this computer uses."
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Approval Status",
+   "options": "Pending Approval\nApproved\nDisabled",
+   "default": "Pending Approval",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "connection_status",
+   "fieldtype": "Select",
+   "label": "Connection",
+   "options": "Offline\nOnline",
+   "default": "Offline",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "whatsapp_status",
+   "fieldtype": "Data",
+   "label": "WhatsApp Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Computer"
+  },
+  {
+   "fieldname": "hostname",
+   "fieldtype": "Data",
+   "label": "Hostname",
+   "read_only": 1
+  },
+  {
+   "fieldname": "platform",
+   "fieldtype": "Data",
+   "label": "Platform",
+   "read_only": 1
+  },
+  {
+   "fieldname": "app_version",
+   "fieldtype": "Data",
+   "label": "Connector Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "registered_on",
+   "fieldtype": "Datetime",
+   "label": "Registered On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_heartbeat",
+   "fieldtype": "Datetime",
+   "label": "Last Heartbeat",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "last_ip",
+   "fieldtype": "Data",
+   "label": "Last IP Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_error",
+   "fieldtype": "Small Text",
+   "label": "Last Reported Error",
+   "read_only": 1
+  },
+  {
+   "fieldname": "auth_section",
+   "fieldtype": "Section Break",
+   "label": "Authentication",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "auth_method",
+   "fieldtype": "Select",
+   "label": "Authentication Method",
+   "options": "User Login\nDevice Token\nAPI Key",
+   "default": "User Login",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_c",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "token_issued_on",
+   "fieldtype": "Datetime",
+   "label": "Token Issued On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_hash",
+   "fieldtype": "Data",
+   "label": "Token Hash",
+   "read_only": 1,
+   "hidden": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-11-21 13:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "WhatsApp Connector",
+ "name": "WhatsApp Device",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  },
+  {
+   "role": "WhatsApp Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 0,
+   "email": 0,
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "device_name,hostname,user",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "device_name"
+}
