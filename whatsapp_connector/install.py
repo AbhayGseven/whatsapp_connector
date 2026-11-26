@@ -42,12 +42,16 @@ def before_install():
 def after_install():
 	ensure_service_user()
 	ensure_indexes()
-	from whatsapp_connector.api.document_send import ensure_default_doctypes
+	from whatsapp_connector.api.document_send import ensure_default_doctypes, sync_server_scripts
 
 	ensure_default_doctypes()
+	sync_server_scripts()
 
 
 def after_migrate():
 	ensure_roles()
 	ensure_service_user()
 	ensure_indexes()
+	from whatsapp_connector.api.document_send import sync_server_scripts
+
+	sync_server_scripts()

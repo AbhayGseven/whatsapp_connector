@@ -30,14 +30,10 @@ scheduler_events = {
 	},
 }
 
-# Live updates for the WhatsApp Chat page
+# Live updates for the WhatsApp Chat page.
+# (WhatsApp sent automatically for documents uses Server Scripts made from
+# WhatsApp Connector Settings > DocTypes, not doc_events. See api/document_send.py.)
 doc_events = {
-	# WhatsApp sent automatically for the DocTypes in WhatsApp Connector Settings.
-	"*": {
-		"after_insert": "whatsapp_connector.api.document_send.on_document_event",
-		"on_submit": "whatsapp_connector.api.document_send.on_document_event",
-		"on_cancel": "whatsapp_connector.api.document_send.on_document_event",
-	},
 	# A disabled user is logged out of the desktop connector.
 	"User": {"on_update": "whatsapp_connector.api.login.on_user_update"},
 	"WhatsApp Message": {

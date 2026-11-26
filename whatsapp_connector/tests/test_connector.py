@@ -484,8 +484,13 @@ class TestWhatsAppConnector(IntegrationTestCase):
 		device_id, account_id = self.approved_device()
 		frappe.db.set_value("WhatsApp Account", account_id, "user", "Administrator")  # the user saving the documents
 		document_send.ensure_default_doctypes()
+		document_send.sync_server_scripts()
 		rules = {r.document_type: r.send_on for r in frappe.get_single("WhatsApp Connector Settings").send_doctypes}
 		self.assertEqual((rules.get("Sales Invoice"), rules.get("Customer")), ("Submit", "New Document"))
+		# One Server Script per row; no doc_events hook.
+		script = frappe.get_doc("Server Script", "WhatsApp Auto Send - Customer - New Document")
+		self.assertEqual((script.reference_doctype, script.doctype_event, script.disabled), ("Customer", "After Insert", 0))
+		self.assertTrue(frappe.db.exists("Server Script", "WhatsApp Auto Send - Sales Invoice - Submit"))
 
 		def new_customer(**extra):
 			return frappe.get_doc({"doctype": "Customer", "customer_name": f"WA Auto {new_id()[:6]}", "customer_type": "Company", **extra}).insert(
@@ -527,6 +532,22 @@ class TestWhatsAppConnector(IntegrationTestCase):
 		# DocTypes not in the list send nothing.
 		todo = frappe.get_doc({"doctype": "ToDo", "description": "x"}).insert(ignore_permissions=True)
 		self.assertFalse(frappe.db.exists("WhatsApp Message", {"reference_name": todo.name}))
+
+		# The whitelisted entry point re-checks everything a direct API call could fake.
+		old_customer = new_customer(mobile_no="9811100088")
+		frappe.db.delete("WhatsApp Message", {"reference_name": old_customer.name})
+		frappe.db.set_value("Customer", old_customer.name, "creation", frappe.utils.add_to_date(None, hours=-1))
+		document_send.queue_from_script("Customer", old_customer.name, "New Document")  # not new any more
+		document_send.queue_from_script("Customer", old_customer.name, "Submit")  # no such rule
+		document_send.queue_from_script("ToDo", todo.name, "New Document")  # not in the list
+		self.assertFalse(frappe.db.exists("WhatsApp Message", {"reference_name": ("in", [old_customer.name, todo.name])}))
+
+		# Removing a row removes its Server Script.
+		settings = frappe.get_single("WhatsApp Connector Settings")
+		settings.send_doctypes = [r for r in settings.send_doctypes if r.document_type != "Customer"]
+		settings.save()
+		self.assertFalse(frappe.db.exists("Server Script", "WhatsApp Auto Send - Customer - New Document"))
+		self.assertTrue(frappe.db.exists("Server Script", "WhatsApp Auto Send - Sales Invoice - Submit"))
 
 	def test_new_whatsapp_message_from_the_form(self):
 		from unittest.mock import patch

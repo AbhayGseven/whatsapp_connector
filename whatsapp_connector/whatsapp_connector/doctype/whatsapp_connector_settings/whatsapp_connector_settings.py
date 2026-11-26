@@ -33,3 +33,9 @@ class WhatsAppConnectorSettings(Document):
 		self.realtime_url = (self.realtime_url or "").strip().rstrip("/") or None
 		if self.realtime_url and not re.match(r"^(https?|wss?)://[^/\s]+$", self.realtime_url):
 			frappe.throw(_("Realtime URL must look like https://host or http://host:9000 (no path)."))
+
+	def on_update(self):
+		# One Server Script per DocTypes row sends the WhatsApp automatically.
+		from whatsapp_connector.api.document_send import sync_server_scripts
+
+		sync_server_scripts(self)

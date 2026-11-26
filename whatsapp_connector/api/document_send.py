@@ -7,11 +7,18 @@ The message goes out from the WhatsApp number of the user who saved / submitted
 the document (else the default sending account), is linked to the document, and a
 comment on the document records the result. The work runs in the background after
 the save is committed, so saving never waits for the PDF or the message.
+
+There is no doc_events hook for this. Saving the Settings creates one Server Script
+per row ("WhatsApp Auto Send - <DocType> - <Send When>"), and each script calls
+queue_from_script(). Server Scripts must be enabled for the bench
+(server_script_enabled in common_site_config.json); without that the scripts are
+kept disabled, because an enabled script would stop those documents from saving.
 """
 
 import frappe
 from frappe import _
-from frappe.utils import cint
+from frappe.utils import cint, now_datetime, time_diff_in_seconds
+from frappe.utils.safe_exec import is_safe_exec_enabled
 
 from whatsapp_connector.api.messaging import queue_message
 
@@ -54,9 +61,6 @@ def ensure_default_doctypes():
 	settings.save()
 
 
-EVENTS = {"after_insert": "New Document", "on_submit": "Submit", "on_cancel": "Cancel"}
-
-
 def _rule(doctype, send_on):
 	if doctype.startswith("WhatsApp "):
 		return None
@@ -66,13 +70,94 @@ def _rule(doctype, send_on):
 	return None
 
 
-def on_document_event(doc, method=None):
-	"""doc_events "*": queue the WhatsApp in the background after the save commits."""
+# Send When -> Server Script event, and the docstatus the document must have.
+SCRIPT_EVENTS = {"New Document": "After Insert", "Submit": "After Submit", "Cancel": "After Cancel"}
+DOCSTATUS = {"Submit": 1, "Cancel": 2}
+SCRIPT_PREFIX = "WhatsApp Auto Send"
+SCRIPT_BODY = """# Created by WhatsApp Connector from WhatsApp Connector Settings > DocTypes.
+# Change the Settings, not this script: saving the Settings rewrites it.
+frappe.call("whatsapp_connector.api.document_send.queue_from_script", doctype=doc.doctype, name=doc.name, send_on={send_on!r})
+"""
+
+
+def _script_name(doctype, send_on):
+	return f"{SCRIPT_PREFIX} - {doctype} - {send_on}"
+
+
+def sync_server_scripts(settings=None):
+	"""Make the Server Scripts match the Settings > DocTypes rows (create, update, delete)."""
+	settings = settings or frappe.get_single("WhatsApp Connector Settings")
+	enabled = is_safe_exec_enabled()
+	wanted = {}
+	for row in settings.get("send_doctypes") or []:
+		if row.document_type and row.send_on in SCRIPT_EVENTS and not row.document_type.startswith("WhatsApp "):
+			wanted[_script_name(row.document_type, row.send_on)] = (row.document_type, row.send_on)
+
+	existing = frappe.get_all("Server Script", filters={"name": ("like", f"{SCRIPT_PREFIX} - %")}, pluck="name")
+
+	# Saving a Server Script is limited to Script Manager / Administrator. The script text
+	# is fixed above (only the Send When value goes in), so a WhatsApp Manager saving the
+	# Settings may create these without being a Script Manager.
+	session_user = frappe.session.user
+	frappe.local.session.user = "Administrator"
+	try:
+		for name in existing:
+			if name not in wanted:
+				frappe.delete_doc("Server Script", name, ignore_permissions=True, force=True)
+		for name, (doctype, send_on) in wanted.items():
+			values = {
+				"script_type": "DocType Event",
+				"reference_doctype": doctype,
+				"doctype_event": SCRIPT_EVENTS[send_on],
+				"script": SCRIPT_BODY.format(send_on=send_on),
+				"disabled": 0 if enabled else 1,
+			}
+			if name in existing:
+				script = frappe.get_doc("Server Script", name)
+				if all(script.get(k) == v for k, v in values.items()):
+					continue
+				script.update(values)
+				script.save(ignore_permissions=True)
+			else:
+				frappe.get_doc({"doctype": "Server Script", "name": name, "__newname": name, **values}).insert(
+					ignore_permissions=True
+				)
+	finally:
+		frappe.local.session.user = session_user
+
+	if wanted and not enabled and not (frappe.flags.in_install or frappe.flags.in_migrate):
+		frappe.msgprint(
+			_(
+				"Server Scripts are not enabled on this bench, so WhatsApp will not be sent automatically. "
+				"Enable them (server_script_enabled in common_site_config.json) and save these Settings again."
+			),
+			indicator="orange",
+			alert=True,
+		)
+
+
+@frappe.whitelist(methods=["POST"])
+def queue_from_script(doctype: str, name: str, send_on: str):
+	"""Called by the "WhatsApp Auto Send" Server Scripts after a document is created,
+	submitted or cancelled. Whitelisted (Server Scripts can only call whitelisted code),
+	so it re-checks everything a direct API call could fake."""
 	if frappe.flags.in_import or frappe.flags.in_migrate or frappe.flags.in_install:
 		return
-	send_on = EVENTS.get(method)
-	if not send_on or not _rule(doc.doctype, send_on):
+	if send_on not in SCRIPT_EVENTS or not _rule(doctype, send_on):
 		return
+	doc = frappe.get_doc(doctype, name)
+	if not frappe.has_permission(doctype, "read", doc):
+		return
+	if send_on in DOCSTATUS and doc.docstatus != DOCSTATUS[send_on]:
+		return
+	# "New Document" only right after the insert, not for any old record.
+	if send_on == "New Document" and time_diff_in_seconds(now_datetime(), doc.creation) > 300:
+		return
+	_queue(doc, send_on)
+
+
+def _queue(doc, send_on):
+	"""Queue the WhatsApp in the background after the save commits."""
 	frappe.enqueue(
 		"whatsapp_connector.api.document_send.send_for_document",
 		queue="short",
