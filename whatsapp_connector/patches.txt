@@ -9,3 +9,4 @@ whatsapp_connector.patches.v1.set_message_numbers
 whatsapp_connector.patches.v1.set_account_owner
 whatsapp_connector.patches.v1.add_send_doctypes
 whatsapp_connector.patches.v1.set_send_when
+whatsapp_connector.patches.v1.remove_stale_list_sort
